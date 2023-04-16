@@ -1,0 +1,63 @@
+{% args state %}
+<!DOCTYPE html>
+<html data-bs-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>MicroPython Webserver</title>
+    <link rel="stylesheet" href="static/css/bootstrap-switch-button.min.css" />
+    <link rel="stylesheet" href="static/css/bootstrap.min.css" />
+    <script src="static/js/index.js"></script>
+    <script src="static/js/bootstrap-switch-button.min.js"></script>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary bg-dark" data-bs-theme="dark">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">ESP32 8ch Relay Board</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+          <div class="navbar-nav">
+            <a class="nav-link active" aria-current="page" href="#">Home</a>
+            <a class="nav-link" href="#">Modem</a>
+            <a class="nav-link" href="#">Grafana</a>
+            <a class="nav-link disabled">Three</a>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-8">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th scope="col" style="width:20%">Relay</th>
+                <th scope="col" style="width:30%">State</th>
+                <th scope="col" style="width:50%">Function</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for r in sorted(state.keys()) %}
+              <tr>
+                <!-- <div class="mb-3 form-check form-switch"> -->
+                <td>
+                  <label>{{ state[r]["label"] }}</label>
+                </td>
+                <td>
+                  <input id="switch-{{r}}" type="checkbox" data-toggle="switchbutton" data-onstyle="outline-success" data-offstyle="outline-danger" onchange="toggleButtonSwitch('{{r}}', 'switch-{{r}}')" {% if state[r]["val"] == 1 %} checked {% endif %}/>
+                </td>
+                <td>
+                  <label>{{ state[r]["func"] }}</label>
+                </td>
+                <!-- </div> -->
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
